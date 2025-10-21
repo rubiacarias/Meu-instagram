@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ana Carias - Multidisciplinary Designer" />
+  <meta name="keywords" content="design, front-end, motion, creative, portfolio" />
+  <meta name="author" content="Ana Carias" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ana Carias - Multidisciplinary Designer" />
+  <meta property="og:description" content="making good work since 2020" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <title>Ana Carias - Multidisciplinary Designer</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+  <header role="banner">
+    <div class="logo" title="Ana Carias">Ana Carias</div>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#about">Sobre</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#work">Trabalhos</a></li>
+        <li><a href="#clients">Clientes</a></li>
+        <li><a href="#footer">Contato</a></li>
+      </ul>
+    </nav>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile" aria-modal="true">
+    <a href="#about">Sobre</a>
+    <a href="#skills">Skills</a>
+    <a href="#work">Trabalhos</a>
+    <a href="#clients">Clientes</a>
+    <a href="#footer">Contato</a>
+  </nav>
+
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader-text">Loading...</div></div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <nav class="nav-dot" aria-label="Section dots">
+    <button class="nav-dot-item active" data-section="hero" aria-label="Ir para Hero"></button>
+    <button class="nav-dot-item" data-section="about" aria-label="Ir para Sobre"></button>
+    <button class="nav-dot-item" data-section="experience" aria-label="Ir para Experiência"></button>
+    <button class="nav-dot-item" data-section="clients" aria-label="Ir para Clientes"></button>
+    <button class="nav-dot-item" data-section="testimonials" aria-label="Ir para Depoimentos"></button>
+    <button class="nav-dot-item" data-section="footer" aria-label="Ir para Rodapé"></button>
+  </nav>
+
+  <main id="conteudo" tabindex="-1" role="main">
+    <!-- Hero panorâmico com parallax -->
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-background" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-name" id="hero-heading">Ana Carias</h1>
+          <div class="hero-tagline"><span class="highlight">criando</span><br/>soluções<br/>eficientes</div>
+          <div class="hero-since">desde<br/>2022</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre/Skills com tom sarcástico original -->
+    <section class="about-section" id="about" aria-labelledby="about-title">
+      <div class="about-header">
+        <h2 class="about-title" id="about-title">Sobre mim</h2>
+        <p class="what-i-do">O que eu faço (e o que eu finjo que faço)</p>
+      </div>
+
+      <div class="skills-grid" id="skills">
+        <div class="skill-item" data-emotes="💻✨🚀">
+          <h3 class="skill-title">Front-end</h3>
+          <p class="skill-desc">Posso criar qualquer interface que meu MacBook conseguir renderizar.</p>
+        </div>
+        <div class="skill-item" data-emotes="🎞️✨🪄">
+          <h3 class="skill-title">Motion</h3>
+          <p class="skill-desc">Uso animações tão sofisticadas que parecem esconder bugs (às vezes, escondem).</p>
+        </div>
+        <div class="skill-item" data-emotes="🎨💡✨">
+          <h3 class="skill-title">Visual</h3>
+          <p class="skill-desc">Pesquiso referências, remix e finjo que foi intencional o tempo todo.</p>
+        </div>
+        <div class="skill-item" data-emotes="🧪📊🧭">
+          <h3 class="skill-title">UX/UI</h3>
+          <p class="skill-desc">Sigo boas práticas, testo, repito e torço para ninguém ver os rascunhos.</p>
+        </div>
+        <div class="skill-item" data-emotes="📺😂💸">
+          <h3 class="skill-title">Storytelling</h3>
+          <p class="skill-desc">Achei que ficaria rico no YouTube. Não fiquei.</p>
+        </div>
+      </div>
+
+      <div class="work-image-section" id="work">
+        <p>Work Images<br /><small>Desktop & Mobile versions</small></p>
+      </div>
+    </section>
+
+    <section class="experience-section" id="experience" aria-labelledby="experience-title">
+      <div class="experience-header">
+        <h2 class="experience-title" id="experience-title">Experiência</h2>
+        <p class="history-text">Algumas aventuras semi-épicas</p>
+      </div>
+      <div class="experience-grid">
+        <div class="exp-item" data-emotes="🏆✨"> <p class="exp-position">Lead Designer</p> <h3 class="exp-company">Empresa Incrível</h3> </div>
+        <div class="exp-item" data-emotes="🎯💼"> <p class="exp-position">Senior Designer</p> <h3 class="exp-company">Studio Criativo</h3> </div>
+        <div class="exp-item" data-emotes="⚙️🚀"> <p class="exp-position">Designer Pleno</p> <h3 class="exp-company">Agência Digital</h3> </div>
+        <div class="exp-item" data-emotes="🌱📈"> <p class="exp-position">Designer Junior</p> <h3 class="exp-company">Startup Tech</h3> </div>
+      </div>
+    </section>
+
+    <section class="clients-section" id="clients" aria-labelledby="clients-title">
+      <h2 class="clients-title" id="clients-title">Clientes</h2>
+      <div class="planet-image"><p>Planet Image</p></div>
+      <div class="clients-grid">
+        <div class="client-item" data-emotes="✨🤝"> <h3 class="client-name">Google</h3> <p class="client-desc">Trabalhando na próxima interface — sem prometer modo escuro perfeito.</p> </div>
+        <div class="client-item" data-emotes="🍎✨"> <h3 class="client-name">Apple</h3> <p class="client-desc">Conceitos lindos para o iOS. Bateria não incluída.</p> </div>
+        <div class="client-item" data-emotes="🎬🔥"> <h3 class="client-name">Netflix</h3> <p class="client-desc">Defini vibes visuais — spoilers só no Figma.</p> </div>
+        <div class="client-item" data-emotes="🎧🚀"> <h3 class="client-name">Spotify</h3> <p class="client-desc">Contribuí para experiências fluídas (shuffle ainda é polêmico).</p> </div>
+        <div class="client-item" data-emotes="🖌️📦"> <h3 class="client-name">Adobe</h3> <p class="client-desc">Projetei para milhões. Exportei em .png mesmo.</p> </div>
+        <div class="client-item" data-emotes="🪟💡"> <h3 class="client-name">Microsoft</h3> <p class="client-desc">Explorando futuros do software; clippy aprovou (eu acho).</p> </div>
+      </div>
+    </section>
+
+    <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
+      <h2 class="testimonials-title" id="testimonials-title">O QUE ELES DISSERAM</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-item">
+          <p class="testimonial-quote">"Ele é <span class="highlight">seriamente</span> o melhor e <span class="highlight">nunca</span> reclama"</p>
+          <p class="testimonial-author">Michael Silva</p>
+          <p class="testimonial-position">Diretor de Design</p>
+          <p class="testimonial-company">Empresa Incrível</p>
+        </div>
+        <div class="testimonial-item">
+          <p class="testimonial-quote">"Isso parece <span class="highlight">incrível</span>. Ótimo trabalho!"</p>
+          <p class="testimonial-author">Pedro Santos</p>
+          <p class="testimonial-position">Head de Produto</p>
+          <p class="testimonial-company">Studio Criativo</p>
+        </div>
+        <div class="testimonial-item">
+          <p class="testimonial-quote">"Ele é uma fera. Suas habilidades são <span class="highlight">insanas</span>!"</p>
+          <p class="testimonial-author">Ana Costa</p>
+          <p class="testimonial-position">Gerente de Projeto</p>
+          <p class="testimonial-company">Agência Digital</p>
+        </div>
+      </div>
+      <div class="bottom-banner"><p>Banner Bottom Image<br /><small>Desktop & Mobile versions</small></p></div>
+    </section>
+  </main>
+
+  <footer id="footer" role="contentinfo">
+    <div class="footer-motto">
+      <p class="motto-title">MEU LEMA</p>
+      <h2 class="motto-text"><span class="highlight">Design</span><br/>excepcional<br/>é honesto</h2>
+      <p class="motto-author">Dieter Rams</p>
+    </div>
+
+    <div class="footer-connect">
+      <h3 class="connect-title">Connect</h3>
+      <div class="connect-links">
+        <a href="mailto:anacariasuxdesign@gmail.com" class="connect-link">anacariasuxdesign@gmail.com</a>
+        <a href="tel:+351969552810" class="connect-link">+351 969552810</a>
+      </div>
+    </div>
+
+    <div class="footer-alternative" style="margin-top: 100px; opacity: .5;">
+      <div class="footer-motto">
+        <p class="motto-title">MEU LEMA</p>
+        <h2 class="motto-text">Nem todo<br/>design honesto<br/>é <span class="highlight">bom</span></h2>
+        <p class="motto-author">Ana Carias</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
