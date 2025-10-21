@@ -19,189 +19,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <title>Ana Carias - Multidisciplinary Designer</title>
-
-  <style>
-    :root {
-      --color-green: #dd7039f3;
-      --color-vanilla: #ebd9b2f5;
-      --color-black: #000000eb;
-      --color-dark-gray: #1a1a1aea;
-      --color-medium-gray: #e4e4e4f3;
-      --color-light-gray: #151515ed;
-      --font-display: 'Playfair Display', serif;
-      --font-body: 'Poppins', sans-serif;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; font-size: 16px; }
-
-    body {
-      font-family: var(--font-body);
-      background-color: var(--color-black);
-      color: var(--color-vanilla);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    header {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 80px;
-      background: rgba(27, 27, 27, 0.6);
-      backdrop-filter: blur(6px);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 5%; z-index: 2000;
-    }
-
-    .logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--color-green); cursor: pointer; transition: color .3s ease; }
-    .logo:hover { color: var(--color-vanilla); }
-
-    nav ul { list-style: none; display: flex; gap: 40px; }
-    nav ul li a { text-decoration: none; color: var(--color-vanilla); font-weight: 500; font-size: 1rem; transition: all .3s ease; position: relative; }
-    nav ul li a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--color-green); transition: width .3s ease; }
-    nav ul li a:hover::after { width: 100%; }
-
-    .menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 6px; z-index: 2100; }
-    .menu-toggle span { display: block; width: 28px; height: 3px; background: var(--color-vanilla); border-radius: 5px; transition: all .4s ease; }
-
-    .mobile-nav { position: fixed; top: 0; right: -100%; width: 70%; height: 100%; background: var(--color-dark-gray); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px; transition: right .4s ease; z-index: 2000; }
-    .mobile-nav.active { right: 0; }
-    .mobile-nav a { color: var(--color-vanilla); font-size: 1.3rem; text-decoration: none; transition: color .3s ease; }
-    .mobile-nav a:hover { color: var(--color-green); }
-
-    .menu-toggle.active span:nth-child(1){ transform: rotate(45deg) translateY(8px); }
-    .menu-toggle.active span:nth-child(2){ opacity: 0; }
-    .menu-toggle.active span:nth-child(3){ transform: rotate(-45deg) translateY(-8px); }
-
-    section { padding: 100px 10%; min-height: 100vh; }
-    h1, h2, h3 { font-family: var(--font-display); color: var(--color-green); }
-
-    @media(max-width: 768px){ nav ul { display: none; } .menu-toggle { display: flex; } }
-
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--color-black); }
-    ::-webkit-scrollbar-thumb { background: var(--color-green); border-radius: 4px; }
-
-    .loader { position: fixed; inset: 0; width: 100vw; height: 100vh; background: var(--color-black); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity .5s ease; }
-    .loader-text { color: var(--color-green); font-size: 18px; font-family: var(--font-display); animation: pulse 2s infinite; }
-
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
-
-    .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: var(--color-green); z-index: 9999; transition: width .1s ease; }
-
-    .nav-dot { position: fixed; top: 50%; right: 30px; transform: translateY(-50%); z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
-    .nav-dot-item { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--color-vanilla); background: transparent; cursor: pointer; transition: all .3s ease; position: relative; }
-    .nav-dot-item:hover, .nav-dot-item.active { background: var(--color-green); border-color: var(--color-green); }
-
-    .hero { height: 100vh; display: flex; align-items: center; position: relative; padding: 0; background: var(--color-black); overflow: hidden; }
-    /* Panoramic hero: use background image layer for performance */
-    .hero-media { position: absolute; inset: -10vh 0 -10vh 0; background-image: url('./foto-perfil.jpg'); background-size: cover; background-position: center 40%; will-change: transform; transform: translateZ(0); z-index: 0; }
-    .hero-background { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.65)); z-index: 1; }
-    .hero-background::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, rgba(132, 204, 22, 0.1), transparent, rgba(132, 204, 22, 0.1)); z-index: 1; animation: backgroundShift 8s ease-in-out infinite; }
-    .hero-content { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: rgba(0,0,0,.7); backdrop-filter: blur(2px); }
-    .hero-text { max-width: 800px; padding: 0 2rem; }
-
-    .hero-name { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 8rem); font-weight: 600; color: var(--color-vanilla); line-height: .9; margin-bottom: 2rem; opacity: 0; transform: translateY(50px); animation: fadeInUp 1s ease .3s forwards; text-shadow: 0 0 30px rgba(0,0,0,.8); }
-    .hero-tagline { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 400; color: var(--color-vanilla); line-height: .9; margin-bottom: 1rem; opacity: 0; animation: fadeInUp 1s ease .6s forwards; text-shadow: 0 0 20px rgba(0,0,0,.8); }
-    .hero-tagline .highlight { color: var(--color-green); text-shadow: 0 0 20px var(--color-green); }
-    .hero-since { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 400; color: var(--color-vanilla); line-height: .9; margin-bottom: 3rem; opacity: 0; animation: fadeInUp 1s ease .9s forwards; text-shadow: 0 0 20px rgba(0,0,0,.8); }
-
-    /* No inline image; panoramic background replaces it */
-
-    @keyframes backgroundShift {
-      0%,100% { background: linear-gradient(45deg, rgba(132, 204, 22, 0.1), transparent, rgba(132, 204, 22, 0.1)); }
-      50% { background: linear-gradient(45deg, transparent, rgba(132, 204, 22, 0.2), transparent); }
-    }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-
-    .about-section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
-    .about-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px; }
-    .about-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: var(--color-vanilla); }
-    .what-i-do { font-family: var(--font-body); font-size: 1.2rem; color: var(--color-medium-gray); }
-
-    .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px 100px; margin-bottom: 100px; }
-    .skill-item { opacity: 0; transform: translateY(30px); transition: all .6s ease; }
-    .skill-item.animate { opacity: 1; transform: translateY(0); }
-    .skill-title { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-green); margin-bottom: 20px; line-height: 1; }
-    .skill-desc { font-family: var(--font-body); font-size: 1rem; color: var(--color-vanilla); line-height: 1.6; margin-bottom: 16px; }
-
-    .work-image-section { width: 100%; height: 400px; background: var(--color-medium-gray); margin-bottom: 100px; position: relative; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: var(--color-vanilla); font-size: 1.2rem; }
-
-    .experience-section { padding: 0 5%; max-width: 1400px; margin: 0 auto 100px; }
-    .experience-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px; }
-    .experience-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: var(--color-vanilla); }
-    .history-text { font-family: var(--font-body); font-size: 1.2rem; color: var(--color-medium-gray); }
-    .experience-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 100px; }
-    .exp-item { opacity: 0; transform: translateY(30px); transition: all .6s ease; }
-    .exp-item.animate { opacity: 1; transform: translateY(0); }
-    .exp-position { font-family: var(--font-body); font-size: 1.1rem; color: var(--color-vanilla); margin-bottom: 5px; }
-    .exp-company { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--color-green); margin-bottom: 20px; }
-
-    .clients-section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
-    .clients-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: var(--color-vanilla); margin-bottom: 80px; }
-    .clients-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px 100px; margin-bottom: 100px; }
-    .client-item { opacity: 0; transform: translateY(30px); transition: all .6s ease; }
-    .client-item.animate { opacity: 1; transform: translateY(0); }
-    .client-name { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-green); margin-bottom: 20px; line-height: 1; }
-    .client-desc { font-family: var(--font-body); font-size: 1rem; color: var(--color-vanilla); line-height: 1.6; margin-bottom: 16px; }
-
-    .planet-image { width: 200px; height: 200px; background: var(--color-medium-gray); border-radius: 50%; margin: 50px auto; display: flex; align-items: center; justify-content: center; color: var(--color-vanilla); font-size: 1rem; }
-
-    .testimonials-section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
-    .testimonials-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: var(--color-vanilla); margin-bottom: 80px; text-align: center; }
-    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; margin-bottom: 100px; }
-    .testimonial-item { text-align: center; opacity: 0; transform: translateY(30px); transition: all .6s ease; }
-    .testimonial-item.animate { opacity: 1; transform: translateY(0); }
-    .testimonial-quote { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--color-vanilla); line-height: 1.4; margin-bottom: 30px; }
-    .testimonial-quote .highlight { color: var(--color-green); }
-    .testimonial-author { font-family: var(--font-body); font-size: 1rem; color: var(--color-green); font-weight: 600; margin-bottom: 5px; }
-    .testimonial-position, .testimonial-company { font-family: var(--font-body); font-size: .9rem; color: var(--color-light-gray); }
-
-    .bottom-banner { width: 100%; height: 300px; background: var(--color-medium-gray); margin-bottom: 100px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: var(--color-vanilla); font-size: 1.2rem; }
-
-    .footer { padding: 100px 5%; text-align: center; }
-    .motto-title { font-family: var(--font-body); font-size: 1.2rem; color: var(--color-vanilla); margin-bottom: 20px; letter-spacing: .2em; text-transform: uppercase; }
-    .motto-text { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: var(--color-vanilla); line-height: 1.2; margin-bottom: 20px; }
-    .motto-text .highlight { color: var(--color-green); }
-    .motto-author { font-family: var(--font-body); font-size: 1.2rem; color: var(--color-light-gray); }
-
-    .footer-connect { margin-bottom: 50px; }
-    .connect-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--color-vanilla); margin-bottom: 30px; }
-    .connect-links { display: flex; justify-content: center; gap: 40px; }
-    .connect-link { color: var(--color-green); text-decoration: none; font-family: var(--font-body); font-size: 1.1rem; transition: all .3s ease; }
-    .connect-link:hover { color: var(--color-vanilla); text-shadow: 0 0 10px var(--color-green); }
-
-    @media (max-width: 768px) {
-      .skills-grid, .experience-grid, .clients-grid { grid-template-columns: 1fr; gap: 40px; }
-      .testimonials-grid { grid-template-columns: 1fr; gap: 40px; }
-      .about-header, .experience-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .nav-dot { display: none; }
-      .connect-links { flex-direction: column; gap: 20px; }
-    }
-
-    .skill-item:hover .skill-title, .client-item:hover .client-name, .exp-item:hover .exp-company { text-shadow: 0 0 20px var(--color-green); transition: all .3s ease; }
-
-    @media (prefers-reduced-motion: reduce) { * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
-
-    .connect-link:focus, .audio-control:focus, .menu-toggle:focus { outline: 2px solid var(--color-green); outline-offset: 2px; }
-
-    /* Additional enhancements */
-    .hero-image { filter: brightness(1.05) contrast(1.05); transition: transform .3s ease, filter .3s ease; }
-    .hero-image:hover { filter: brightness(1.12) contrast(1.1); transform: scale(1.02); }
-
-    /* Skip link (WCAG 2.4.1) */
-    .skip-link { position: absolute; left: -999px; top: -999px; background: var(--color-vanilla); color: var(--color-black); padding: 8px 12px; border-radius: 6px; z-index: 3000; }
-    .skip-link:focus { left: 16px; top: 16px; }
-
-    /* Keyboard focus ring when navigating with keyboard */
-    .keyboard :focus { outline: 2px solid var(--color-green) !important; outline-offset: 3px !important; }
-  </style>
-  </style>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
   <header role="banner">
-    <div class="logo">Ana Carias</div>
+    <div class="logo" title="Ana Carias">Ana Carias</div>
     <nav aria-label="Main">
       <ul>
         <li><a href="#about">Sobre</a></li>
@@ -237,6 +60,7 @@
   </nav>
 
   <main id="conteudo" tabindex="-1" role="main">
+    <!-- Hero panorâmico com parallax -->
     <section class="hero" id="hero" aria-labelledby="hero-heading">
       <div class="hero-media" aria-hidden="true"></div>
       <div class="hero-background" aria-hidden="true"></div>
@@ -249,89 +73,90 @@
       </div>
     </section>
 
+    <!-- Sobre/Skills com tom sarcástico original -->
     <section class="about-section" id="about" aria-labelledby="about-title">
-    <div class="about-header">
-      <h2 class="about-title" id="about-title">Sobre mim</h2>
-      <p class="what-i-do">O que eu faço</p>
-    </div>
+      <div class="about-header">
+        <h2 class="about-title" id="about-title">Sobre mim</h2>
+        <p class="what-i-do">O que eu faço (e o que eu finjo que faço)</p>
+      </div>
 
-    <div class="skills-grid" id="skills">
-      <div class="skill-item">
-        <h3 class="skill-title">Front-end</h3>
-        <p class="skill-desc">Posso criar qualquer interface que meu MacBook conseguir renderizar</p>
+      <div class="skills-grid" id="skills">
+        <div class="skill-item" data-emotes="💻✨🚀">
+          <h3 class="skill-title">Front-end</h3>
+          <p class="skill-desc">Posso criar qualquer interface que meu MacBook conseguir renderizar.</p>
+        </div>
+        <div class="skill-item" data-emotes="🎞️✨🪄">
+          <h3 class="skill-title">Motion</h3>
+          <p class="skill-desc">Uso animações tão sofisticadas que parecem esconder bugs (às vezes, escondem).</p>
+        </div>
+        <div class="skill-item" data-emotes="🎨💡✨">
+          <h3 class="skill-title">Visual</h3>
+          <p class="skill-desc">Pesquiso referências, remix e finjo que foi intencional o tempo todo.</p>
+        </div>
+        <div class="skill-item" data-emotes="🧪📊🧭">
+          <h3 class="skill-title">UX/UI</h3>
+          <p class="skill-desc">Sigo boas práticas, testo, repito e torço para ninguém ver os rascunhos.</p>
+        </div>
+        <div class="skill-item" data-emotes="📺😂💸">
+          <h3 class="skill-title">Storytelling</h3>
+          <p class="skill-desc">Achei que ficaria rico no YouTube. Não fiquei.</p>
+        </div>
       </div>
-      <div class="skill-item">
-        <h3 class="skill-title">Motion</h3>
-        <p class="skill-desc">Eu uso animações sofisticadas que fazem meu design parecer mais interessante do que realmente é</p>
-      </div>
-      <div class="skill-item">
-        <h3 class="skill-title">Visual</h3>
-        <p class="skill-desc">Pesquiso referências visuais e as combino para criar meu próprio trabalho</p>
-      </div>
-      <div class="skill-item">
-        <h3 class="skill-title">UX/UI</h3>
-        <p class="skill-desc">Utilizo boas práticas, testo e re-itero até funcionar</p>
-      </div>
-      <div class="skill-item">
-        <h3 class="skill-title">Storytelling</h3>
-        <p class="skill-desc">Crio narrativas que conectam pessoas e produtos</p>
-      </div>
-    </div>
 
-    <div class="work-image-section" id="work">
-      <p>Work Images<br /><small>Desktop & Mobile versions</small></p>
-    </div>
+      <div class="work-image-section" id="work">
+        <p>Work Images<br /><small>Desktop & Mobile versions</small></p>
+      </div>
     </section>
 
     <section class="experience-section" id="experience" aria-labelledby="experience-title">
-    <div class="experience-header">
-      <h2 class="experience-title" id="experience-title">Experiência</h2>
-      <p class="history-text">História</p>
-    </div>
-    <div class="experience-grid">
-      <div class="exp-item"><p class="exp-position">Lead Designer</p><h3 class="exp-company">Empresa Incrível</h3></div>
-      <div class="exp-item"><p class="exp-position">Senior Designer</p><h3 class="exp-company">Studio Criativo</h3></div>
-      <div class="exp-item"><p class="exp-position">Designer Pleno</p><h3 class="exp-company">Agência Digital</h3></div>
-      <div class="exp-item"><p class="exp-position">Designer Junior</p><h3 class="exp-company">Startup Tech</h3></div>
-    </div>
+      <div class="experience-header">
+        <h2 class="experience-title" id="experience-title">Experiência</h2>
+        <p class="history-text">Algumas aventuras semi-épicas</p>
+      </div>
+      <div class="experience-grid">
+        <div class="exp-item" data-emotes="🏆✨"> <p class="exp-position">Lead Designer</p> <h3 class="exp-company">Empresa Incrível</h3> </div>
+        <div class="exp-item" data-emotes="🎯💼"> <p class="exp-position">Senior Designer</p> <h3 class="exp-company">Studio Criativo</h3> </div>
+        <div class="exp-item" data-emotes="⚙️🚀"> <p class="exp-position">Designer Pleno</p> <h3 class="exp-company">Agência Digital</h3> </div>
+        <div class="exp-item" data-emotes="🌱📈"> <p class="exp-position">Designer Junior</p> <h3 class="exp-company">Startup Tech</h3> </div>
+      </div>
     </section>
 
     <section class="clients-section" id="clients" aria-labelledby="clients-title">
-    <h2 class="clients-title" id="clients-title">Clientes</h2>
-    <div class="planet-image"><p>Planet Image</p></div>
-    <div class="clients-grid">
-      <div class="client-item"><h3 class="client-name">Google</h3><p class="client-desc">Trabalhando na próxima experiência de interface.</p></div>
-      <div class="client-item"><h3 class="client-name">Apple</h3><p class="client-desc">Desenvolvi conceitos para o ecossistema iOS.</p></div>
-      <div class="client-item"><h3 class="client-name">Netflix</h3><p class="client-desc">Defini linguagem visual para campanhas locais.</p></div>
-      <div class="client-item"><h3 class="client-name">Spotify</h3><p class="client-desc">Contribuí com iniciativas de produto.</p></div>
-      <div class="client-item"><h3 class="client-name">Adobe</h3><p class="client-desc">Projetei um produto com mais de 1M de usuários.</p></div>
-      <div class="client-item"><h3 class="client-name">Microsoft</h3><p class="client-desc">Explorei futuros de design de software.</p></div>
-    </div>
+      <h2 class="clients-title" id="clients-title">Clientes</h2>
+      <div class="planet-image"><p>Planet Image</p></div>
+      <div class="clients-grid">
+        <div class="client-item" data-emotes="✨🤝"> <h3 class="client-name">Google</h3> <p class="client-desc">Trabalhando na próxima interface — sem prometer modo escuro perfeito.</p> </div>
+        <div class="client-item" data-emotes="🍎✨"> <h3 class="client-name">Apple</h3> <p class="client-desc">Conceitos lindos para o iOS. Bateria não incluída.</p> </div>
+        <div class="client-item" data-emotes="🎬🔥"> <h3 class="client-name">Netflix</h3> <p class="client-desc">Defini vibes visuais — spoilers só no Figma.</p> </div>
+        <div class="client-item" data-emotes="🎧🚀"> <h3 class="client-name">Spotify</h3> <p class="client-desc">Contribuí para experiências fluídas (shuffle ainda é polêmico).</p> </div>
+        <div class="client-item" data-emotes="🖌️📦"> <h3 class="client-name">Adobe</h3> <p class="client-desc">Projetei para milhões. Exportei em .png mesmo.</p> </div>
+        <div class="client-item" data-emotes="🪟💡"> <h3 class="client-name">Microsoft</h3> <p class="client-desc">Explorando futuros do software; clippy aprovou (eu acho).</p> </div>
+      </div>
     </section>
 
     <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
-    <h2 class="testimonials-title" id="testimonials-title">O QUE ELES DISSERAM</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-item">
-        <p class="testimonial-quote">"Ele é <span class="highlight">seriamente</span> o melhor e <span class="highlight">nunca</span> reclama"</p>
-        <p class="testimonial-author">Michael Silva</p>
-        <p class="testimonial-position">Diretor de Design</p>
-        <p class="testimonial-company">Empresa Incrível</p>
+      <h2 class="testimonials-title" id="testimonials-title">O QUE ELES DISSERAM</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-item">
+          <p class="testimonial-quote">"Ele é <span class="highlight">seriamente</span> o melhor e <span class="highlight">nunca</span> reclama"</p>
+          <p class="testimonial-author">Michael Silva</p>
+          <p class="testimonial-position">Diretor de Design</p>
+          <p class="testimonial-company">Empresa Incrível</p>
+        </div>
+        <div class="testimonial-item">
+          <p class="testimonial-quote">"Isso parece <span class="highlight">incrível</span>. Ótimo trabalho!"</p>
+          <p class="testimonial-author">Pedro Santos</p>
+          <p class="testimonial-position">Head de Produto</p>
+          <p class="testimonial-company">Studio Criativo</p>
+        </div>
+        <div class="testimonial-item">
+          <p class="testimonial-quote">"Ele é uma fera. Suas habilidades são <span class="highlight">insanas</span>!"</p>
+          <p class="testimonial-author">Ana Costa</p>
+          <p class="testimonial-position">Gerente de Projeto</p>
+          <p class="testimonial-company">Agência Digital</p>
+        </div>
       </div>
-      <div class="testimonial-item">
-        <p class="testimonial-quote">"Isso parece <span class="highlight">incrível</span>. Ótimo trabalho!"</p>
-        <p class="testimonial-author">Pedro Santos</p>
-        <p class="testimonial-position">Head de Produto</p>
-        <p class="testimonial-company">Studio Criativo</p>
-      </div>
-      <div class="testimonial-item">
-        <p class="testimonial-quote">"Ele é uma fera. Suas habilidades são <span class="highlight">insanas</span>!"</p>
-        <p class="testimonial-author">Ana Costa</p>
-        <p class="testimonial-position">Gerente de Projeto</p>
-        <p class="testimonial-company">Agência Digital</p>
-      </div>
-    </div>
-    <div class="bottom-banner"><p>Banner Bottom Image<br /><small>Desktop & Mobile versions</small></p></div>
+      <div class="bottom-banner"><p>Banner Bottom Image<br /><small>Desktop & Mobile versions</small></p></div>
     </section>
   </main>
 
@@ -359,140 +184,6 @@
     </div>
   </footer>
 
-  <script>
-    // Improve focus visibility for keyboard users per WCAG 2.1
-    (function focusVisible(){
-      function onFirstTab(e){ if (e.key === 'Tab') { document.body.classList.add('keyboard'); window.removeEventListener('keydown', onFirstTab); window.addEventListener('mousedown', onMouseDownOnce); } }
-      function onMouseDownOnce(){ document.body.classList.remove('keyboard'); window.removeEventListener('mousedown', onMouseDownOnce); window.addEventListener('keydown', onFirstTab); }
-      window.addEventListener('keydown', onFirstTab);
-    })();
-
-    // Mobile menu: toggle + focus trap + ESC close
-    const toggle = document.getElementById('menu-toggle');
-    const mobileNav = document.getElementById('mobile-nav');
-    let releaseFocusTrap = null;
-
-    function trapFocus(container, initial) {
-      const selector = 'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
-      function getFocusable() {
-        return Array.from(container.querySelectorAll(selector)).filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true' && el.tabIndex !== -1 && el.offsetParent !== null);
-      }
-      function onKeydown(e) {
-        if (e.key === 'Escape') { e.preventDefault(); closeMenu(); return; }
-        if (e.key !== 'Tab') return;
-        const focusable = getFocusable();
-        if (focusable.length === 0) { e.preventDefault(); return; }
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
-      document.addEventListener('keydown', onKeydown);
-      (initial || getFocusable()[0] || container).focus();
-      return () => document.removeEventListener('keydown', onKeydown);
-    }
-
-    function openMenu() {
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.classList.add('active');
-      mobileNav.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      releaseFocusTrap = trapFocus(mobileNav, mobileNav.querySelector('a'));
-    }
-    function closeMenu() {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.classList.remove('active');
-      mobileNav.classList.remove('active');
-      document.body.style.overflow = '';
-      if (releaseFocusTrap) { releaseFocusTrap(); releaseFocusTrap = null; }
-      toggle.focus();
-    }
-
-    toggle.addEventListener('click', () => {
-      if (mobileNav.classList.contains('active')) closeMenu(); else openMenu();
-    });
-    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-
-    // Loader: fade out after load
-    (function initLoader(){
-      const loader = document.getElementById('loader');
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          loader.style.opacity = '0';
-          setTimeout(() => { loader.style.display = 'none'; }, 500);
-        }, 800);
-      });
-    })();
-
-    // Scroll progress
-    (function initScrollProgress(){
-      const progress = document.getElementById('scrollProgress');
-      const update = () => {
-        const docHeight = Math.max(document.body.scrollHeight - window.innerHeight, 1);
-        const scrollPercent = (window.pageYOffset / docHeight) * 100;
-        progress.style.width = scrollPercent + '%';
-      };
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update);
-      update();
-    })();
-
-    // Navigation dots + aria-current in header nav
-    (function initNavigationDots(){
-      const dots = document.querySelectorAll('.nav-dot-item');
-      const sections = Array.from(document.querySelectorAll('section'));
-      const headerLinks = document.querySelectorAll('header nav a');
-      dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-          const targetId = dot.getAttribute('data-section');
-          const target = document.getElementById(targetId);
-          if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-      });
-      const onScroll = () => {
-        const mid = window.innerHeight / 2;
-        let current = '';
-        for (const section of sections) {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= mid && rect.bottom >= mid) { current = section.id; break; }
-        }
-        dots.forEach(d => d.classList.toggle('active', d.getAttribute('data-section') === current));
-        headerLinks.forEach(link => {
-          const href = link.getAttribute('href') || '';
-          const matches = href.startsWith('#') && href.slice(1) === current;
-          if (matches) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
-        });
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
-
-    // Intersection animation
-    (function initScrollAnimations(){
-      const observer = new IntersectionObserver((entries, obs) => {
-        for (const e of entries) {
-          if (e.isIntersecting) { e.target.classList.add('animate'); obs.unobserve(e.target); }
-        }
-      }, { threshold: 0.2, rootMargin: '-50px 0px' });
-      document.querySelectorAll('.skill-item, .exp-item, .client-item, .testimonial-item').forEach(el => observer.observe(el));
-    })();
-
-    // Parallax (hero panoramic) + subtle rotation; disabled on reduced motion
-    (function initParallax(){
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion) return;
-      let ticking = false;
-      const heroMedia = document.querySelector('.hero-media');
-      const planet = document.querySelector('.planet-image');
-      function update(){
-        const scrolled = window.pageYOffset;
-        if (heroMedia) { heroMedia.style.transform = `translateY(${scrolled * -0.2}px)`; }
-        if (planet) { planet.style.transform = `rotate(${scrolled * 0.1}deg)`; }
-        ticking = false;
-      }
-      function onScroll(){ if (!ticking) { requestAnimationFrame(update); ticking = true; } }
-      window.addEventListener('scroll', onScroll, { passive: true });
-    })();
-  </script>
+  <script src="./script.js" defer></script>
 </body>
 </html>
