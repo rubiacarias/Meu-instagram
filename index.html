@@ -94,7 +94,9 @@
     .nav-dot-item:hover, .nav-dot-item.active { background: var(--color-green); border-color: var(--color-green); }
 
     .hero { height: 100vh; display: flex; align-items: center; position: relative; padding: 0; background: var(--color-black); overflow: hidden; }
-    .hero-background { position: absolute; inset: 0; background: var(--color-medium-gray); display: flex; align-items: center; justify-content: center; color: var(--color-vanilla); font-size: 2rem; z-index: 1; }
+    /* Panoramic hero: use background image layer for performance */
+    .hero-media { position: absolute; inset: -10vh 0 -10vh 0; background-image: url('./foto-perfil.jpg'); background-size: cover; background-position: center 40%; will-change: transform; transform: translateZ(0); z-index: 0; }
+    .hero-background { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.65)); z-index: 1; }
     .hero-background::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, rgba(132, 204, 22, 0.1), transparent, rgba(132, 204, 22, 0.1)); z-index: 1; animation: backgroundShift 8s ease-in-out infinite; }
     .hero-content { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: rgba(0,0,0,.7); backdrop-filter: blur(2px); }
     .hero-text { max-width: 800px; padding: 0 2rem; }
@@ -104,7 +106,7 @@
     .hero-tagline .highlight { color: var(--color-green); text-shadow: 0 0 20px var(--color-green); }
     .hero-since { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 400; color: var(--color-vanilla); line-height: .9; margin-bottom: 3rem; opacity: 0; animation: fadeInUp 1s ease .9s forwards; text-shadow: 0 0 20px rgba(0,0,0,.8); }
 
-    .hero-image { width: min(420px, 70vw); aspect-ratio: 1; border-radius: 50%; object-fit: cover; box-shadow: 0 20px 60px rgba(0,0,0,.5); position: relative; z-index: 2; }
+    /* No inline image; panoramic background replaces it */
 
     @keyframes backgroundShift {
       0%,100% { background: linear-gradient(45deg, rgba(132, 204, 22, 0.1), transparent, rgba(132, 204, 22, 0.1)); }
@@ -186,10 +188,19 @@
     /* Additional enhancements */
     .hero-image { filter: brightness(1.05) contrast(1.05); transition: transform .3s ease, filter .3s ease; }
     .hero-image:hover { filter: brightness(1.12) contrast(1.1); transform: scale(1.02); }
+
+    /* Skip link (WCAG 2.4.1) */
+    .skip-link { position: absolute; left: -999px; top: -999px; background: var(--color-vanilla); color: var(--color-black); padding: 8px 12px; border-radius: 6px; z-index: 3000; }
+    .skip-link:focus { left: 16px; top: 16px; }
+
+    /* Keyboard focus ring when navigating with keyboard */
+    .keyboard :focus { outline: 2px solid var(--color-green) !important; outline-offset: 3px !important; }
+  </style>
   </style>
 </head>
 <body>
-  <header>
+  <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+  <header role="banner">
     <div class="logo">Ana Carias</div>
     <nav aria-label="Main">
       <ul>
@@ -205,7 +216,7 @@
     </button>
   </header>
 
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile" aria-modal="true">
     <a href="#about">Sobre</a>
     <a href="#skills">Skills</a>
     <a href="#work">Trabalhos</a>
@@ -213,7 +224,7 @@
     <a href="#footer">Contato</a>
   </nav>
 
-  <div class="loader" id="loader"><div class="loader-text">Loading...</div></div>
+  <div class="loader" id="loader" aria-hidden="true"><div class="loader-text">Loading...</div></div>
   <div class="scroll-progress" id="scrollProgress"></div>
 
   <nav class="nav-dot" aria-label="Section dots">
@@ -225,21 +236,22 @@
     <button class="nav-dot-item" data-section="footer" aria-label="Ir para Rodapé"></button>
   </nav>
 
-  <section class="hero" id="hero">
-    <div class="hero-background" aria-hidden="true"></div>
-    <div class="hero-content">
-      <img src="./foto-perfil.jpg" alt="Foto de perfil de Ana Carias" class="hero-image" />
-      <div class="hero-text">
-        <h1 class="hero-name">Ana Carias</h1>
-        <div class="hero-tagline"><span class="highlight">criando</span><br/>soluções<br/>eficientes</div>
-        <div class="hero-since">desde<br/>2022</div>
+  <main id="conteudo" tabindex="-1" role="main">
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-background" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-name" id="hero-heading">Ana Carias</h1>
+          <div class="hero-tagline"><span class="highlight">criando</span><br/>soluções<br/>eficientes</div>
+          <div class="hero-since">desde<br/>2022</div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="about-section" id="about">
+    <section class="about-section" id="about" aria-labelledby="about-title">
     <div class="about-header">
-      <h2 class="about-title">Sobre mim</h2>
+      <h2 class="about-title" id="about-title">Sobre mim</h2>
       <p class="what-i-do">O que eu faço</p>
     </div>
 
@@ -269,11 +281,11 @@
     <div class="work-image-section" id="work">
       <p>Work Images<br /><small>Desktop & Mobile versions</small></p>
     </div>
-  </section>
+    </section>
 
-  <section class="experience-section" id="experience">
+    <section class="experience-section" id="experience" aria-labelledby="experience-title">
     <div class="experience-header">
-      <h2 class="experience-title">Experiência</h2>
+      <h2 class="experience-title" id="experience-title">Experiência</h2>
       <p class="history-text">História</p>
     </div>
     <div class="experience-grid">
@@ -282,10 +294,10 @@
       <div class="exp-item"><p class="exp-position">Designer Pleno</p><h3 class="exp-company">Agência Digital</h3></div>
       <div class="exp-item"><p class="exp-position">Designer Junior</p><h3 class="exp-company">Startup Tech</h3></div>
     </div>
-  </section>
+    </section>
 
-  <section class="clients-section" id="clients">
-    <h2 class="clients-title">Clientes</h2>
+    <section class="clients-section" id="clients" aria-labelledby="clients-title">
+    <h2 class="clients-title" id="clients-title">Clientes</h2>
     <div class="planet-image"><p>Planet Image</p></div>
     <div class="clients-grid">
       <div class="client-item"><h3 class="client-name">Google</h3><p class="client-desc">Trabalhando na próxima experiência de interface.</p></div>
@@ -295,10 +307,10 @@
       <div class="client-item"><h3 class="client-name">Adobe</h3><p class="client-desc">Projetei um produto com mais de 1M de usuários.</p></div>
       <div class="client-item"><h3 class="client-name">Microsoft</h3><p class="client-desc">Explorei futuros de design de software.</p></div>
     </div>
-  </section>
+    </section>
 
-  <section class="testimonials-section" id="testimonials">
-    <h2 class="testimonials-title">O QUE ELES DISSERAM</h2>
+    <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
+    <h2 class="testimonials-title" id="testimonials-title">O QUE ELES DISSERAM</h2>
     <div class="testimonials-grid">
       <div class="testimonial-item">
         <p class="testimonial-quote">"Ele é <span class="highlight">seriamente</span> o melhor e <span class="highlight">nunca</span> reclama"</p>
@@ -320,9 +332,10 @@
       </div>
     </div>
     <div class="bottom-banner"><p>Banner Bottom Image<br /><small>Desktop & Mobile versions</small></p></div>
-  </section>
+    </section>
+  </main>
 
-  <section class="footer" id="footer">
+  <footer id="footer" role="contentinfo">
     <div class="footer-motto">
       <p class="motto-title">MEU LEMA</p>
       <h2 class="motto-text"><span class="highlight">Design</span><br/>excepcional<br/>é honesto</h2>
@@ -344,25 +357,61 @@
         <p class="motto-author">Ana Carias</p>
       </div>
     </div>
-  </section>
+  </footer>
 
   <script>
-    // Mobile menu toggle + auto close on navigation
+    // Improve focus visibility for keyboard users per WCAG 2.1
+    (function focusVisible(){
+      function onFirstTab(e){ if (e.key === 'Tab') { document.body.classList.add('keyboard'); window.removeEventListener('keydown', onFirstTab); window.addEventListener('mousedown', onMouseDownOnce); } }
+      function onMouseDownOnce(){ document.body.classList.remove('keyboard'); window.removeEventListener('mousedown', onMouseDownOnce); window.addEventListener('keydown', onFirstTab); }
+      window.addEventListener('keydown', onFirstTab);
+    })();
+
+    // Mobile menu: toggle + focus trap + ESC close
     const toggle = document.getElementById('menu-toggle');
     const mobileNav = document.getElementById('mobile-nav');
-    toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      toggle.classList.toggle('active');
-      mobileNav.classList.toggle('active');
-      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-    });
-    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    let releaseFocusTrap = null;
+
+    function trapFocus(container, initial) {
+      const selector = 'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
+      function getFocusable() {
+        return Array.from(container.querySelectorAll(selector)).filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true' && el.tabIndex !== -1 && el.offsetParent !== null);
+      }
+      function onKeydown(e) {
+        if (e.key === 'Escape') { e.preventDefault(); closeMenu(); return; }
+        if (e.key !== 'Tab') return;
+        const focusable = getFocusable();
+        if (focusable.length === 0) { e.preventDefault(); return; }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+      document.addEventListener('keydown', onKeydown);
+      (initial || getFocusable()[0] || container).focus();
+      return () => document.removeEventListener('keydown', onKeydown);
+    }
+
+    function openMenu() {
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.classList.add('active');
+      mobileNav.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      releaseFocusTrap = trapFocus(mobileNav, mobileNav.querySelector('a'));
+    }
+    function closeMenu() {
+      toggle.setAttribute('aria-expanded', 'false');
       toggle.classList.remove('active');
       mobileNav.classList.remove('active');
-      toggle.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
-    }));
+      if (releaseFocusTrap) { releaseFocusTrap(); releaseFocusTrap = null; }
+      toggle.focus();
+    }
+
+    toggle.addEventListener('click', () => {
+      if (mobileNav.classList.contains('active')) closeMenu(); else openMenu();
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
     // Loader: fade out after load
     (function initLoader(){
@@ -388,10 +437,11 @@
       update();
     })();
 
-    // Navigation dots
+    // Navigation dots + aria-current in header nav
     (function initNavigationDots(){
       const dots = document.querySelectorAll('.nav-dot-item');
       const sections = Array.from(document.querySelectorAll('section'));
+      const headerLinks = document.querySelectorAll('header nav a');
       dots.forEach(dot => {
         dot.addEventListener('click', () => {
           const targetId = dot.getAttribute('data-section');
@@ -407,6 +457,11 @@
           if (rect.top <= mid && rect.bottom >= mid) { current = section.id; break; }
         }
         dots.forEach(d => d.classList.toggle('active', d.getAttribute('data-section') === current));
+        headerLinks.forEach(link => {
+          const href = link.getAttribute('href') || '';
+          const matches = href.startsWith('#') && href.slice(1) === current;
+          if (matches) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
+        });
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
@@ -422,14 +477,16 @@
       document.querySelectorAll('.skill-item, .exp-item, .client-item, .testimonial-item').forEach(el => observer.observe(el));
     })();
 
-    // Parallax + subtle rotation
+    // Parallax (hero panoramic) + subtle rotation; disabled on reduced motion
     (function initParallax(){
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) return;
       let ticking = false;
-      const hero = document.querySelector('.hero-content');
+      const heroMedia = document.querySelector('.hero-media');
       const planet = document.querySelector('.planet-image');
       function update(){
         const scrolled = window.pageYOffset;
-        if (hero) { hero.style.transform = `translateY(${scrolled * -0.1}px)`; }
+        if (heroMedia) { heroMedia.style.transform = `translateY(${scrolled * -0.2}px)`; }
         if (planet) { planet.style.transform = `rotate(${scrolled * 0.1}deg)`; }
         ticking = false;
       }
